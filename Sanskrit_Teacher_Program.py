@@ -158,11 +158,21 @@ def find_the_letter_of_sound_consonant(x):
         if value == x:
             return key
         
+# Functions for Full Alphabet Practice
+def pick_random_letter_sound():
+    return random.choice(list(sanskrit_alphabet_full.values()))
+
+def find_the_letter_of_sound(x):
+    for key, value in sanskrit_alphabet_full.items():
+        if value == x:
+            return key
+        
 
 while True:
     prac_type = input('Would you like to practice vowels only, consonants only, or both? Enter "v" to practice vowels only, enter "c" to practice consonants only, and enter "b" to practice both\nEnter "quit" to quit the program\n\nYour Answer: ')
 
     if prac_type == 'quit':
+        print("\nExiting program...\n")
         sys.exit()
 
     if prac_type in ['v', 'c', 'b']:
@@ -179,6 +189,7 @@ if prac_type == 'v':
         answer = input('Your Answer: ').lower().strip()
 
         if answer == 'quit':
+            print("\nExiting program...\n")
             break
 
         if answer == find_the_letter_of_sound_vowel(letter_sound):
@@ -191,6 +202,7 @@ if prac_type == 'v':
                 print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
                 answer = input('Your Answer: ').lower().strip()
                 if answer == 'quit':
+                    print("\nExiting program...\n")
                     sys.exit()
                 if answer != find_the_letter_of_sound_vowel(y):
                     print('Incorrect Try Again\n\n')
@@ -205,6 +217,7 @@ elif prac_type == 'c':
         answer = input('Your Answer: ').lower().strip()
 
         if answer == 'quit':
+            print("\nExiting program...\n")
             break
 
         if answer == find_the_letter_of_sound_consonant(letter_sound):
@@ -217,6 +230,7 @@ elif prac_type == 'c':
                 print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
                 answer = input('Your Answer: ').lower().strip()
                 if answer == 'quit':
+                    print("\nExiting program...\n")
                     sys.exit()
                 if answer != find_the_letter_of_sound_consonant(y):
                     print('Incorrect Try Again\n\n')
@@ -225,7 +239,32 @@ elif prac_type == 'c':
                     break
 
 elif prac_type == 'b':
-    pass 
+    while True:
+        letter_sound = pick_random_letter_sound()
+        print(f"\n\nType in the letter that makes the sound {letter_sound} (if you want to quit then type 'quit' without the quotations)\n")
+        answer = input('Your Answer: ').lower().strip()
+
+        if answer == 'quit':
+            print("\nExiting program...\n")
+            break
+
+        if answer == find_the_letter_of_sound(letter_sound):
+            print('Correct!')
+
+        else:
+            print('Incorrect Try again\n\n')
+            y = letter_sound
+            while True:
+                print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
+                answer = input('Your Answer: ').lower().strip()
+                if answer == 'quit':
+                    print("\nExiting program...\n")
+                    sys.exit()
+                if answer != find_the_letter_of_sound(y):
+                    print('Incorrect Try Again\n\n')
+                if answer == find_the_letter_of_sound(y):
+                    print('Correct!')
+                    break
 
 
 
