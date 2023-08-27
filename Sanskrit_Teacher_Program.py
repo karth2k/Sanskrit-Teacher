@@ -12,6 +12,7 @@ Make sure to install a Devanāgarī keyboard (the writing script used for Sanskr
 
 import random
 import sys
+from local_profile import LocalProfile
 
 sanskrit_alphabet_vowels = {
     'अ' : 'a',
@@ -140,18 +141,22 @@ sanskrit_alphabet_full = {
 }
 
 
-write_or_read = input('Would you like to practice writing or reading? Enter "r" for reading "w" for writing. Type "quit" to quit (make sure to enter all values without the quotations)\n\nYour Answer: ')
-
 while True:
 
-    if write_or_read == 'quit':
+    write_or_read = input('\nWould you like to practice writing or reading? Enter "r" for reading "w" for writing. Type "quit" to quit (make sure to enter all values without the quotations)\n\nYour Answer: ')
+
+    if write_or_read not in ['r', 'w', 'quit']:
+        print("\nInvalid Input Please Try Again\n")
+
+
+    elif write_or_read == 'quit':
         print("\nExiting program...\n")
         sys.exit()
 
     elif write_or_read == 'r':
         pass #work here later
 
-    elif write_or_read == 'w':
+    elif write_or_read == 'w': #If the user wants to practice their reading
 
         # Functions for Vowel Practice
         def pick_random_letter_sound_vowel():
@@ -182,7 +187,7 @@ while True:
                     return key
                 
 
-        while True:
+        while True: # Asks the user if they want to practice vowels, consonants, or writing the full alphabet
             prac_type = input('\n\nWould you like to practice vowels only, consonants only, or both? Enter "v" to practice vowels only, enter "c" to practice consonants only, and enter "b" to practice both\nEnter "quit" to quit the program\n\nYour Answer: ')
 
             if prac_type == 'quit':
@@ -196,7 +201,7 @@ while True:
                 print("\nInvalid Input Please Try Again\n\n")
 
 
-        if prac_type == 'v':
+        if prac_type == 'v': # Helps the user practice vowels
             while True:
                 letter_sound = pick_random_letter_sound_vowel()
                 print(f"\n\nType in the letter that makes the sound {letter_sound} (if you want to quit then type 'quit' without the quotations)\n")
@@ -224,7 +229,7 @@ while True:
                             print("Correct!")
                             break
 
-        elif prac_type == 'c':
+        elif prac_type == 'c': # Helps the user practice consonants 
             while True:
                 letter_sound = pick_random_letter_sound_consonant()
                 print(f"\n\nType in the letter that makes the sound {letter_sound} (if you want to quit then type 'quit' without the quotations)\n")
@@ -252,7 +257,7 @@ while True:
                             print('Correct!')
                             break
 
-        elif prac_type == 'b':
+        elif prac_type == 'b': # Helps the user practice the full alphabet
             while True:
                 letter_sound = pick_random_letter_sound()
                 print(f"\n\nType in the letter that makes the sound {letter_sound} (if you want to quit then type 'quit' without the quotations)\n")
