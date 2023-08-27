@@ -140,6 +140,11 @@ sanskrit_alphabet_full = {
 
 }
 
+def get_username():
+    return input('\nEnter your username: ').strip()
+
+localprofile = LocalProfile()
+
 
 while True:
 
@@ -186,11 +191,19 @@ while True:
                 if value == x:
                     return key
                 
+        username = get_username()
+        profile_exists = localprofile.get_score(username)['correct'] > 0 or localprofile.get_score(username)['wrong'] > 0
+
+        if not profile_exists:
+            localprofile.create_profile(username)
+                
 
         while True: # Asks the user if they want to practice vowels, consonants, or writing the full alphabet
             prac_type = input('\n\nWould you like to practice vowels only, consonants only, or both? Enter "v" to practice vowels only, enter "c" to practice consonants only, and enter "b" to practice both\nEnter "quit" to quit the program\n\nYour Answer: ')
 
             if prac_type == 'quit':
+                current_score = localprofile.get_score(username)
+                print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                 print("\nExiting program...\n")
                 sys.exit()
 
@@ -208,25 +221,34 @@ while True:
                 answer = input('Your Answer: ').lower().strip()
 
                 if answer == 'quit':
+                    current_score = localprofile.get_score(username)
+                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
                 if answer == find_the_letter_of_sound_vowel(letter_sound):
                     print('Correct!')
+                    localprofile.update_score(username, is_correct=True)
+
 
                 else:
                     print('Incorrect Try again\n\n')
+                    localprofile.update_score(username, is_correct=False)
                     y = letter_sound
                     while True:
                         print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
+                            current_score = localprofile.get_score(username)
+                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
                         if answer != find_the_letter_of_sound_vowel(y):
                             print('Incorrect Try Again\n\n')
+                            localprofile.update_score(username, is_correct=False)
                         if answer == find_the_letter_of_sound_vowel(y):
                             print("Correct!")
+                            localprofile.update_score(username, is_correct=True)
                             break
 
         elif prac_type == 'c': # Helps the user practice consonants 
@@ -236,25 +258,35 @@ while True:
                 answer = input('Your Answer: ').lower().strip()
 
                 if answer == 'quit':
+                    current_score = localprofile.get_score(username)
+                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
                 if answer == find_the_letter_of_sound_consonant(letter_sound):
                     print('Correct!')
+                    localprofile.update_score(username, is_correct=True)
 
                 else:
                     print('Incorrect Try again\n\n')
+                    localprofile.update_score(username, is_correct=False)
                     y = letter_sound
                     while True:
                         print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
+                            current_score = localprofile.get_score(username)
+                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
+
                         if answer != find_the_letter_of_sound_consonant(y):
                             print('Incorrect Try Again\n\n')
+                            localprofile.update_score(username, is_correct=False)
+
                         if answer == find_the_letter_of_sound_consonant(y):
                             print('Correct!')
+                            localprofile.update_score(username, is_correct=True)
                             break
 
         elif prac_type == 'b': # Helps the user practice the full alphabet
@@ -264,25 +296,35 @@ while True:
                 answer = input('Your Answer: ').lower().strip()
 
                 if answer == 'quit':
+                    current_score = localprofile.get_score(username)
+                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
                 if answer == find_the_letter_of_sound(letter_sound):
                     print('Correct!')
+                    localprofile.update_score(username, is_correct=True)
 
                 else:
                     print('Incorrect Try again\n\n')
+                    localprofile.update_score(username, is_correct=False)
                     y = letter_sound
                     while True:
                         print(f"Type in the letter that makes the sound {y} (if you want to quit then type 'quit' without the quotations)")
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
+                            current_score = localprofile.get_score(username)
+                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
+
                         if answer != find_the_letter_of_sound(y):
                             print('Incorrect Try Again\n\n')
+                            localprofile.update_score(username, is_correct=False)
+
                         if answer == find_the_letter_of_sound(y):
                             print('Correct!')
+                            localprofile.update_score(username, is_correct=True)
                             break
         else:
             print("\nInvalid Input Please Try Again\n\n")
