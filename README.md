@@ -14,3 +14,10 @@ Steps:
 1. Make sure to install a Devanagari script keyboard layout and familiarizing how it works
 
 2. Simply open the file Sanskrit_Teacher_Program.py with an IDE of your choice and run it and follow the steps it asks.
+
+
+Profile Deletion:
+
+1. In order to delete a profile, when asked to input a profile username, simply type "Profile_Deletion" (without the quotations).
+
+2. Follow the rest of the steps that are given.
