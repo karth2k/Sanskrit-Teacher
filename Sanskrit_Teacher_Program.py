@@ -143,7 +143,7 @@ sanskrit_alphabet_full = {
 def get_username():
     return input('\nEnter your username: ').strip()
 
-localprofile = LocalProfile()
+localprofile = LocalProfile('profiles.json')
 
 
 while True:
