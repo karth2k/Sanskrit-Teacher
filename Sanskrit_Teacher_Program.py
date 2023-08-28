@@ -141,14 +141,18 @@ sanskrit_alphabet_full = {
 }
 
 def get_username():
-    return input('\nEnter your username: ').strip()
+    return input('\nCreate a profile (See readme on deleting profiles).\nEnter your username for your profile: ').strip()
 
 localprofile = LocalProfile('profiles.json')
 
 
 while True:
 
-    write_or_read = input('\nWould you like to practice writing or reading? Enter "r" for reading "w" for writing. Type "quit" to quit (make sure to enter all values without the quotations)\n\nYour Answer: ')
+    if get_username() == 'Profile_Deletion':
+        localprofile.delete_profiles()
+        print('\nAll Profiles Deleted Successfully.')
+
+    write_or_read = input('\nWould you like to practice writing or reading Sanskrit? Enter "r" for reading "w" for writing. Type "quit" to quit (make sure to enter all values without the quotations).\n\nYour Answer: ')
 
     if write_or_read not in ['r', 'w', 'quit']:
         print("\nInvalid Input Please Try Again\n")

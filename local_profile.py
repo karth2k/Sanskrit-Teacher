@@ -1,4 +1,5 @@
 import json
+import os
 
 
 class LocalProfile:
@@ -31,6 +32,11 @@ class LocalProfile:
                 self.profiles[username]['score']['wrong'] += 1
             
             self.save_profiles()
+
+    def delete_profiles(self):
+        self.profiles = {}
+        if os.path.exists(self.filename):
+            os.remove(self.filename)
 
     def get_score(self, username):
         return self.profiles.get(username, {}).get('score', {'correct': 0, 'wrong': 0})
