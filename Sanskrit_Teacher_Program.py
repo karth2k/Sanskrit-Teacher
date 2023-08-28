@@ -12,6 +12,7 @@ Make sure to install a Devanāgarī keyboard (the writing script used for Sanskr
 
 import random
 import sys
+import os
 from local_profile import LocalProfile
 
 sanskrit_alphabet_vowels = {
@@ -145,12 +146,36 @@ def get_username():
 
 localprofile = LocalProfile('profiles.json')
 
+print('Welcome to the Sanskrit Teacher program developed by Karthik Muthukumar, to start please create a profile.\nTo view the total progress board of all profiles simply type, "View_All" without the quotations (keep the capitalization and underscore)\n')
 
 while True:
+    username = get_username()
+    profile_exists = localprofile.get_score(username)['correct'] > 0 or localprofile.get_score(username)['wrong'] > 0
 
-    if get_username() == 'Profile_Deletion':
-        localprofile.delete_profiles()
-        print('\nAll Profiles Deleted Successfully.')
+    if not profile_exists:
+        localprofile.create_profile(username)
+
+    if username == 'Profile_Deletion':
+        prof_delete = input('\nWould you like to delete one profile or all profiles? Enter "1" for one profile to be deleted and "a" for all profiles to be deleted: ')
+        while prof_delete not in ['1', 'a']:
+            print('\nInvalid Input Please Try Again')
+            prof_delete = input('\nWould you like to delete one profile or all profiles? Enter "1" for one profile to be deleted and "a" for all profiles to be deleted: ')
+
+        if prof_delete == 'a':
+            localprofile.delete_profiles()
+            print('\nAll Profiles Deleted Successfully.')
+            sys.exit() #this is fine maybe change
+            
+        elif prof_delete == '1':
+            select_delete = input('\nEnter the profile you would like to delete: ')
+            localprofile.delete_one_profile(select_delete)
+            print('\nProfile has been deleted.')
+            sys.exit() #this is fine maybe change
+            
+        
+        
+
+    
 
     write_or_read = input('\nWould you like to practice writing or reading Sanskrit? Enter "r" for reading "w" for writing. Type "quit" to quit (make sure to enter all values without the quotations).\n\nYour Answer: ')
 
@@ -195,19 +220,13 @@ while True:
                 if value == x:
                     return key
                 
-        username = get_username()
-        profile_exists = localprofile.get_score(username)['correct'] > 0 or localprofile.get_score(username)['wrong'] > 0
-
-        if not profile_exists:
-            localprofile.create_profile(username)
-                
 
         while True: # Asks the user if they want to practice vowels, consonants, or writing the full alphabet
             prac_type = input('\n\nWould you like to practice vowels only, consonants only, or both? Enter "v" to practice vowels only, enter "c" to practice consonants only, and enter "b" to practice both\nEnter "quit" to quit the program\n\nYour Answer: ')
 
             if prac_type == 'quit':
                 current_score = localprofile.get_score(username)
-                print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                 print("\nExiting program...\n")
                 sys.exit()
 
@@ -226,7 +245,7 @@ while True:
 
                 if answer == 'quit':
                     current_score = localprofile.get_score(username)
-                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                    print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
@@ -244,7 +263,7 @@ while True:
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
                             current_score = localprofile.get_score(username)
-                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                            print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
                         if answer != find_the_letter_of_sound_vowel(y):
@@ -263,7 +282,7 @@ while True:
 
                 if answer == 'quit':
                     current_score = localprofile.get_score(username)
-                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                    print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
@@ -280,7 +299,7 @@ while True:
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
                             current_score = localprofile.get_score(username)
-                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                            print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
 
@@ -301,7 +320,7 @@ while True:
 
                 if answer == 'quit':
                     current_score = localprofile.get_score(username)
-                    print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                    print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                     print("\nExiting program...\n")
                     sys.exit()
 
@@ -318,7 +337,7 @@ while True:
                         answer = input('Your Answer: ').lower().strip()
                         if answer == 'quit':
                             current_score = localprofile.get_score(username)
-                            print(f'\nHere is your score:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
+                            print(f'\nHere is your writing progress:\nCorrect answers: {current_score["correct"]}, Wrong answers: {current_score["wrong"]}')
                             print("\nExiting program...\n")
                             sys.exit()
 

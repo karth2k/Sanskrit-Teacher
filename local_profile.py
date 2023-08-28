@@ -32,6 +32,11 @@ class LocalProfile:
                 self.profiles[username]['score']['wrong'] += 1
             
             self.save_profiles()
+    
+    def delete_one_profile(self, username):
+        if username in self.profiles:
+            del self.profiles[username]
+            self.save_profiles()
 
     def delete_profiles(self):
         self.profiles = {}
