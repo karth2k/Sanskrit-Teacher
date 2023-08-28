@@ -33,6 +33,11 @@ class LocalProfile:
             
             self.save_profiles()
     
+    def get_all_profiles(self):
+        with open(self.filename, 'r') as file:
+            profiles = json.load(file)
+        return profiles
+
     def delete_one_profile(self, username):
         if username in self.profiles:
             del self.profiles[username]
