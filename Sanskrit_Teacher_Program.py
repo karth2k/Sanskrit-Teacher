@@ -13,7 +13,14 @@ Make sure to install a Devanāgarī keyboard (the writing script used for Sanskr
 import random
 import sys
 import os
+import openai
 from local_profile import LocalProfile
+from fuzzywuzzy import fuzz
+import tkinter as tk
+
+api_key = '' # Paste your api key here
+
+openai.api_key = api_key
 
 sanskrit_alphabet_vowels = { # Dictionary of all Vowels
     'अ' : 'a',
@@ -141,6 +148,11 @@ sanskrit_alphabet_full = { # Dictionary of the Entire Sanskrit Alphabet
 
 }
 
+
+
+
+
+
 def get_username(): # Function takes a username to create a profile
     return input('\nCreate a profile (See readme on deleting profiles).\nEnter your username for your profile: ').strip()
 
@@ -174,13 +186,13 @@ while True:
         if prof_delete == 'a':
             localprofile.delete_profiles()
             print('\nAll Profiles Deleted Successfully.')
-            sys.exit() #this is fine maybe change
+            sys.exit() 
             
         elif prof_delete == '1':
             select_delete = input('\nEnter the profile you would like to delete: ')
             localprofile.delete_one_profile(select_delete)
             print('\nProfile has been deleted.')
-            sys.exit() #this is fine maybe change
+            sys.exit() 
 
     if username == 'View_All': # Displays all progress for writing and reading if the user enters the input "View_All"
         progress_check = input('\nWould you like to see the progress for reading or writing, enter "w" for writing and enter "r" for reading: ')
@@ -208,10 +220,30 @@ while True:
         print("\nExiting program...\n")
         sys.exit()
 
-    elif write_or_read == 'r':
-        pass #work here later
 
-    elif write_or_read == 'w': #If the user wants to practice their reading
+
+
+    elif write_or_read == 'r': # If the user wants to practice their reading
+
+        easy_or_hard = input('\nWould you like to practice on easy mode or hard mode? (Type "h" for hard, "e" for easy, and "quit" for quit).\n\nYour Answer: ')
+        if easy_or_hard not in ['h', 'e', 'quit']:
+            print("\nInvalid Input Please Try Again\n")
+
+        elif easy_or_hard == "quit":
+            print("\nExiting program...\n")
+            sys.exit()
+
+        elif easy_or_hard == "e":
+            pass
+
+        elif easy_or_hard == "h":
+            pass
+
+
+
+
+
+    elif write_or_read == 'w': #If the user wants to practice their writing
 
         # Functions for Vowel Practice
         def pick_random_letter_sound_vowel(): # Picks a random letter sound

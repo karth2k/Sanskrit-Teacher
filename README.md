@@ -11,9 +11,15 @@ If this works out, I will keep adding more, my goal is to be able to use this to
 
 Steps: 
 
-1. Make sure to install a Devanagari script keyboard layout and familiarizing how it works
+1. Make sure to install a Devanagari script keyboard layout and familiarizing how it works and make sure to have the font installed as well
 
 2. Simply open the file Sanskrit_Teacher_Program.py with an IDE of your choice and run it and follow the steps it asks.
+
+FOR READING PORTION:
+
+1. Also ensure that you have the openai packages installed, to do this go to the project directory in a terminal and type "pip install openai"
+
+2. Make sure you have an API access key and paste it in the top of the Sanskrit_Teacher_Program.py file where it prompts you to do so in the code.
 
 
 Profile Deletion:
