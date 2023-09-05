@@ -17,7 +17,7 @@ Steps:
 
 FOR READING PORTION:
 
-1. Also ensure that you have the openai packages installed, to do this go to the project directory in a terminal and type "pip install openai"
+1. Also ensure that you have the openai packages installed, to do this go to the project directory in a terminal and type "pip install openai." You also need to do  "pip install unidecode"
 
 2. Make sure you have an API access key and paste it in the top of the Sanskrit_Teacher_Program.py file where it prompts you to do so in the code.
 

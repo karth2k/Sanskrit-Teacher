@@ -17,6 +17,7 @@ import openai
 from local_profile import LocalProfile
 from fuzzywuzzy import fuzz
 import tkinter as tk
+from unidecode import unidecode
 
 api_key = '' # Paste your api key here
 
@@ -225,6 +226,58 @@ while True:
 
     elif write_or_read == 'r': # If the user wants to practice their reading
 
+        def generate_sanskrit_word():
+            prompt = "Generate only one random Sanskrit word strictly written in the Devanagari script. Do not provide the english translations or anything else (the response that you give should only be one thing which is the word in Sanskrit)"
+            response = openai.Completion.create(
+                engine="text-davinci-002",
+                prompt=prompt,
+                max_tokens=30,  # Adjust the number of tokens based on your needs
+                stop=None,      # You can set custom stop words if required
+                temperature=0.7  # Adjust temperature for randomness
+            )
+            return response.choices[0].text
+        
+        def evaluate_transliteration(user_transliteration, correct_sanskrit_word):
+            prompt = f'Write the sound that the sanskrit word"{correct_sanskrit_word}" makes in English. Your response should strictly only be 1 word, which is the English transliteration of the {correct_sanskrit_word}. To be specific I am not asking for the translation'
+            response = openai.Completion.create(
+                engine="text-davinci-002",
+                prompt=prompt,
+                max_tokens=30,  # Adjust the number of tokens based on your needs
+                stop=None,      # You can set custom stop words if required
+                temperature=0.7  # Adjust temperature for randomness
+            )
+            model_transliteration = response.choices[0].text.strip()
+            decoded_transliteration = unidecode(model_transliteration)
+            user_answer = user_transliteration
+
+            # Use a similarity score (e.g., fuzz ratio) to compare the two answers
+            similarity_score = fuzz.ratio(user_answer, decoded_transliteration)
+
+            # Define a threshold for similarity to consider the answer correct
+            similarity_threshold = 65 # Adjust as needed
+
+            # If the similarity score is above the threshold, consider it correct
+            if similarity_score >= similarity_threshold:
+                print(f"Similarity Score: {similarity_score}")
+                return True
+            else:
+                print(f"Similarity Score: {similarity_score}")
+                print(f'{decoded_transliteration} this is the decoded')
+                return False
+        
+        def get_meaning_word(sanskritword):
+            prompt = f'Can you give me the meaning of the Sanskrit word {sanskritword}'
+            response = openai.Completion.create(
+                engine="text-davinci-002",
+                prompt=prompt,
+                max_tokens=50,  # Adjust the number of tokens based on your needs
+                stop=None,      # You can set custom stop words if required
+                temperature=0.5  # Adjust temperature for randomness
+            )
+            return response.choices[0].text
+
+            
+
         easy_or_hard = input('\nWould you like to practice on easy mode or hard mode? (Type "h" for hard, "e" for easy, and "quit" for quit).\n\nYour Answer: ')
         if easy_or_hard not in ['h', 'e', 'quit']:
             print("\nInvalid Input Please Try Again\n")
@@ -234,7 +287,50 @@ while True:
             sys.exit()
 
         elif easy_or_hard == "e":
-            pass
+            print('\nMake sure to have a paper ready next to you to write the words down. The words will appear in another window outside the IDE.\n')
+            while True:
+                sanskrit_word = generate_sanskrit_word()
+
+                root = tk.Tk()
+                label = tk.Label(root, text=f'\nRead this sanskrit word and transliterate it to english (close the popup window to proceed to answer): {sanskrit_word}\n')
+                label.pack()
+                root.mainloop()
+                
+
+                user_transliteration = input('\nYour Answer (type "quit" to quit): ')
+
+                if user_transliteration == 'quit':
+                    print("\nExiting program...\n")
+                    sys.exit()
+                    
+                if evaluate_transliteration(user_transliteration, sanskrit_word) == True:
+                    meaning = get_meaning_word(sanskrit_word)
+                    print(f'\nCorrect! {meaning}\n')
+
+                else:
+                    while True:
+                        print('\nIncorrect, Try Again, (the word has been given externally again)')
+                        f = sanskrit_word
+                        root = tk.Tk()
+                        label = tk.Label(root, text=f'\nRead this sanskrit word and transliterate it to english (close the popup window to proceed to answer): {f}\n')
+                        label.pack()
+                        root.mainloop()
+
+
+                        user_tryagain = input('\nYour answer: ')
+                        is_correct = evaluate_transliteration(user_tryagain, f)
+
+                        if user_tryagain == 'quit':
+                            print("\nExiting program...\n")
+                            sys.exit()
+
+                        if is_correct == True:
+                            meaning = get_meaning_word(sanskrit_word)
+                            print(f'\nCorrect! {meaning}')
+                            break
+
+
+                    
 
         elif easy_or_hard == "h":
             pass
